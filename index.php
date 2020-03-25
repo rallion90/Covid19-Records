@@ -69,7 +69,11 @@
 				<span id="today_cases"></span>
 			</div>
 		</div>
-	</div>	
+	</div>
+
+	<footer>
+		<p>By: RRDL <3</p>
+	</footer>	
 	
 
 <script src="asset/canvasjs.min.js"></script>
