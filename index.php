@@ -30,6 +30,16 @@
 <body>
 	<br>
 	<div class="container">
+		<form method="get">
+			<div class="form-group">
+			    <input type="text" class="form-control" name="search_input" id="search_input" placeholder="Enter Country Example 'philippines'">
+			    <br>
+			    <button id='search' class="btn btn-default">Search</button>
+			</div>
+		</form>
+
+		<br>
+		<br>
 		<div id="chartContainer" style="height: 300px; width: 100%;"></div>
 		<br>
 		<div class="row text-center">
@@ -82,7 +92,19 @@
 </html>
 
 <script type="text/javascript">
+	//var url = "https://corona.lmao.ninja/countries/philippines";
 	window.onload = function () {
+
+		var url = "https://corona.lmao.ninja/countries/"+ <?php echo json_encode($_GET['search_input']);?>;
+
+		
+
+		$("#search").click(function(){
+			var str = $('#search_input').val();
+		    var url = "https://corona.lmao.ninja/countries/"+str;
+		    
+		});
+
 
 		var dataPoints = [];
 		var chart = new CanvasJS.Chart("chartContainer",{
@@ -97,7 +119,7 @@
 
 
    
-		$.getJSON("https://corona.lmao.ninja/countries/philippines", function(data) {  
+		$.getJSON(url, function(data) {  
 			$.each(data, function(key, value){
 				dataPoints.push({
 					label: key, y: value
@@ -107,6 +129,7 @@
 
 			chart.render();
 		});
+		//console.log(x);
 		
 	}
 </script>
@@ -114,35 +137,32 @@
 <script type='application/javascript'>
 
     //api url
-   var url = "https://corona.lmao.ninja/countries/Philippines";
+   var url = "https://corona.lmao.ninja/countries/"+ <?php echo json_encode($_GET['search_input']);?>;
+
    
-   function connectToApi() {
+   
     $.ajax({
-			method: 'get',
-			url: url,
-			dataType: 'json',
-			success: function(data){
-				var active = data.active;
-                var confirmed = data.cases;
-                var deaths = data.deaths;
-                var recovered = data.recovered;
-                var today_deaths = data.todayDeaths;
-                var today_cases = data.todayCases;
-                $('#cases').html(confirmed);
-                $('#active').html(active);
-                $('#deaths').html(deaths);
-                $('#recovered').html(recovered);
-                $('#today_deaths').html(today_deaths);
-                $('#today_cases').html(today_cases);
-			}
-		});
-   }
+		method: 'get',
+		url: url,
+		dataType: 'json',
+		success: function(data){
+			var active = data.active;
+            var confirmed = data.cases;
+            var deaths = data.deaths;
+            var recovered = data.recovered;
+            var today_deaths = data.todayDeaths;
+            var today_cases = data.todayCases;
+            $('#cases').html(confirmed);
+            $('#active').html(active);
+            $('#deaths').html(deaths);
+            $('#recovered').html(recovered);
+            $('#today_deaths').html(today_deaths);
+            $('#today_cases').html(today_cases);
+		}
+	});
    
-   $(function(){
-       setInterval(() => {
-        connectToApi();
-       }, 1000);
-   });
+   
+   
 
 </script>
 
