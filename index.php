@@ -107,9 +107,11 @@
 
 
 		var dataPoints = [];
+		var text = <?php echo json_encode($_GET['search_input']);?>+ " "+ "Covid-19 Cases";
+		var capitalize = text.toUpperCase();
 		var chart = new CanvasJS.Chart("chartContainer",{
 			title:{
-				text:"Philippine Covid Cases"
+				text:capitalize
 			},
 			data: [{
 				type: "column",
