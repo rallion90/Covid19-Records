@@ -4,28 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Covid-19 Visualization</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-	<style>
-		@use postcss-custom-media;
-		@use postcss-nested;
-
-		body {
-		  padding: 15px;
-		  list-style-type: none;
-		}
-
-		.Legend-colorBox {
-		    width: 15px;
-		    height: 15px;
-		    display: inline-block;
-		    background-color: rgb(155, 187, 88);
-		    list-style-type: none;
-		}
-
-		.Legend-label{
-			font-size: 10px;
-		}
-	</style>
+	<link rel="stylesheet" href="asset/css/style.css">
 </head>
 <body>
 	<br>
@@ -86,87 +65,35 @@
 	</footer>	
 	
 
+<?php
+	$get_url = json_encode($_GET['search_input']);
+?>
+
 <script src="asset/canvasjs.min.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript">
+	var url_get = "https://corona.lmao.ninja/countries/"+ <?= $get_url; ?>;
+
+</script>
+
+<script src="asset/main.js"></script>
+
+<script type="text/javascript">
+	var url =  "https://corona.lmao.ninja/countries/"+<?php echo $get_url; ?>;
+	var url_name = <?= $get_url ?>;
+</script>
+
+<script src="asset/main2.js"></script>
+
+
+
 </body>
 </html>
 
-<script type="text/javascript">
-	//var url = "https://corona.lmao.ninja/countries/philippines";
-	window.onload = function () {
-
-		var url = "https://corona.lmao.ninja/countries/"+ <?php echo json_encode($_GET['search_input']);?>;
-
-		
-
-		$("#search").click(function(){
-			var str = $('#search_input').val();
-		    var url = "https://corona.lmao.ninja/countries/"+str;
-		    
-		});
 
 
-		var dataPoints = [];
-		var text = <?php echo json_encode($_GET['search_input']);?>+ " "+ "Covid-19 Cases";
-		var capitalize = text.toUpperCase();
-		var chart = new CanvasJS.Chart("chartContainer",{
-			title:{
-				text:capitalize
-			},
-			data: [{
-				type: "column",
-				dataPoints : dataPoints
-			}]
-		});
 
-
-   
-		$.getJSON(url, function(data) {  
-			$.each(data, function(key, value){
-				dataPoints.push({
-					label: key, y: value
-					//label: key.todayCases, y: parseInt(value.todayCases)
-				});
-			});
-
-			chart.render();
-		});
-		//console.log(x);
-		
-	}
-</script>
-
-<script type='application/javascript'>
-
-    //api url
-   var url = "https://corona.lmao.ninja/countries/"+ <?php echo json_encode($_GET['search_input']);?>;
-
-   
-   
-    $.ajax({
-		method: 'get',
-		url: url,
-		dataType: 'json',
-		success: function(data){
-			var active = data.active;
-            var confirmed = data.cases;
-            var deaths = data.deaths;
-            var recovered = data.recovered;
-            var today_deaths = data.todayDeaths;
-            var today_cases = data.todayCases;
-            $('#cases').html(confirmed);
-            $('#active').html(active);
-            $('#deaths').html(deaths);
-            $('#recovered').html(recovered);
-            $('#today_deaths').html(today_deaths);
-            $('#today_cases').html(today_cases);
-		}
-	});
-   
-   
-   
-
-</script>
 
 
 
