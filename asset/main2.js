@@ -1,6 +1,6 @@
 window.onload = function () {
 
-	//var url = "https://corona.lmao.ninja/countries/"+ <?php echo json_encode($_GET['search_input']);?>;
+	//var url_all = "https://corona.lmao.ninja/countries/"+ <?php echo json_encode($_GET['search_input']);?>;
 
 		
 
@@ -12,9 +12,15 @@ window.onload = function () {
 
 
 	var dataPoints = [];
+	var dataPoints2 = [];
+	var url_all = "https://corona.lmao.ninja/countries";
+
 	var text = url_name+ " "+ "Covid-19 Cases";
 	var capitalize = text.toUpperCase();
-	var chart = new CanvasJS.Chart("chartContainer",{
+
+	//first chart
+	var chart1 = new CanvasJS.Chart("chartContainer1",{
+		animationEnabled: true,
 		title:{
 			text:capitalize
 		},
@@ -24,8 +30,34 @@ window.onload = function () {
 		}]
 	});
 
+	//2nd charts
 
-   
+	var chart2 = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	
+	title:{
+		text:"Country with the Highest Rate of Covid 19"
+	},
+	axisX:{
+		interval: 1
+	},
+	axisY2:{
+		interlacedColor: "rgba(1,77,101,.2)",
+		gridColor: "rgba(1,77,101,.1)"
+		//title: "Number of Companies"
+	},
+	data: [{
+		type: "bar",
+		name: "companies",
+		axisYType: "secondary",
+		color: "#014D65",
+		dataPoints: dataPoints2
+	}]
+
+	});
+
+
+   	//first graphg
 	$.getJSON(url, function(data) {  
 		var kuyu = Object.getOwnPropertyNames(data);
 			
@@ -54,10 +86,29 @@ window.onload = function () {
 			label: kuyu[3], y: data.todaysCases
 		});
 
-		
-
-		chart.render();
+		chart1.render();
 	});
+
+	//2nd graph
+	$.getJSON(url_all, function(data) {  
+
+		var laman = data.sort(function(b, a){return b - a});
+
+		var result = laman.slice(0,10);
+		
+		$.each(result, function(item, value){
+			
+			dataPoints2.push({
+				y: value.cases, label: value.country
+			});
+
+			
+		});
+
+		chart2.render();
+	});
+
+	
 		
 		
 }
