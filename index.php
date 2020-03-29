@@ -66,10 +66,21 @@
 	<br>
 	<br>
 	<br>
-	<div class="col-md-12">
-		<div class="container">
-			<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
-		</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-6">	
+				<div class="container">
+					<div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+				</div>
+			</div>
+			
+			<div class="col-md-6 text-center">	
+				<div class="container">
+					<div id="chartContainer3" style="height: 300px; width: 100%;"></div>
+				</div>
+			</div>	
+	
+		</div>	
 	</div>
 	<footer>
 		<p>By: RRDL <3</p>

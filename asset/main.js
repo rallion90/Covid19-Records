@@ -20,7 +20,7 @@ $.ajax({
             $('#recovered').html(recovered);
             $('#today_deaths').html(today_deaths);
             $('#today_cases').html(today_cases);
-            $('#logo').attr('href', logo)
+            $('#logo').attr('href', logo);
 	}
 });
    

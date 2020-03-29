@@ -13,6 +13,7 @@ window.onload = function () {
 
 	var dataPoints = [];
 	var dataPoints2 = [];
+	var dataPoints3 = [];
 	var url_all = "https://corona.lmao.ninja/countries";
 
 	var text = url_name+ " "+ "Covid-19 Cases";
@@ -33,27 +34,47 @@ window.onload = function () {
 	//2nd charts
 
 	var chart2 = new CanvasJS.Chart("chartContainer2", {
-	animationEnabled: true,
-	
-	title:{
-		text:"Country with the Highest Rate of Covid 19"
-	},
-	axisX:{
-		interval: 1
-	},
-	axisY2:{
-		interlacedColor: "rgba(1,77,101,.2)",
-		gridColor: "rgba(1,77,101,.1)"
-		//title: "Number of Companies"
-	},
-	data: [{
-		type: "bar",
-		name: "companies",
-		axisYType: "secondary",
-		color: "#014D65",
-		dataPoints: dataPoints2
-	}]
+		animationEnabled: true,
+		
+		title:{
+			text:"Country with the Highest Rate of Covid 19"
+		},
+		axisX:{
+			interval: 1
+		},
+		axisY2:{
+			interlacedColor: "rgba(1,77,101,.2)",
+			gridColor: "rgba(1,77,101,.1)"
+			//title: "Number of Companies"
+		},
+		data: [{
+			type: "bar",
+			name: "companies",
+			axisYType: "secondary",
+			color: "#014D65",
+			dataPoints: dataPoints2
+		}]
+	});
 
+	//3rd charts
+
+	var chart3 = new CanvasJS.Chart("chartContainer3", {
+		theme: "light2", // "light1", "light2", "dark1", "dark2"
+		exportEnabled: true,
+		animationEnabled: true,
+		title: {
+			text: "Death, Cases, And Recovered Worldwide"
+		},
+		data: [{
+			type: "pie",
+			startAngle: 25,
+			toolTipContent: "<b>{label}</b>: {y}",
+			showInLegend: "true",
+			legendText: "{label}",
+			indexLabelFontSize: 16,
+			indexLabel: "{label} - {y}",
+			dataPoints: dataPoints3
+		}]
 	});
 
 
@@ -101,12 +122,48 @@ window.onload = function () {
 			dataPoints2.push({
 				y: value.cases, label: value.country
 			});
-
-			
 		});
 
 		chart2.render();
 	});
+
+
+	$.getJSON(url_all, function(data){
+		var sum_cases = 0;
+		var sum_deaths = 0;
+		var sum_recovered = 0;
+
+		//cases
+		$.each(data, function(key, values){
+			sum_cases += values.cases;
+		});
+
+		//death
+		$.each(data, function(key, values){
+			sum_deaths += values.deaths;
+		});
+
+		//recovered
+		$.each(data, function(key, values){
+			sum_recovered += values.recovered;
+		});
+		
+
+		dataPoints3.push({
+			y: sum_cases, label: 'Cases', color: 'maroon'
+		});
+
+		dataPoints3.push({
+			y: sum_deaths, label: 'Deaths', color: 'black'
+		});
+
+		dataPoints3.push({
+			y: sum_recovered, label: 'Recovered', color: 'grey'
+		});
+
+		chart3.render();
+	});
+	//chart3.render();
 
 	
 		
